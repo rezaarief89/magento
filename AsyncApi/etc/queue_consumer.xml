@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:MessageQueue/etc/queue_consumer.xsd">
+    <consumer name="product_bulk_update_consumer" 
+              queue="product_bulk_update_consumer" 
+              connection="db"
+              maxMessages="5000"
+              consumerInstance="Magento\Framework\MessageQueue\Consumer"
+              handler="Wow\AsyncApi\Model\Queue\Consumer::process" />
+</config>
