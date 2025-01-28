@@ -1,0 +1,178 @@
+<?php
+
+use Magento\Catalog\Model\Product\Option;
+/**
+ * @var $block \Magento\Catalog\Block\Product\View\Options\Type\Select\Checkable
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+$option = $block->getOption();
+if ($option): ?>
+    <?php
+    $configValue = $block->getPreconfiguredValue($option);
+    $optionType = $option->getType();
+    $arraySign = $optionType === Option::OPTION_TYPE_CHECKBOX ? '[]' : '';
+    $count = 1;
+    
+    ?>
+
+<?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $objectManager->get("\Magento\Store\Model\StoreManagerInterface");
+    $customBlock = $objectManager->get("\Wow\DigitalPrinting\Block\View\Checkable");
+    $websiteCode = $storeManager->getWebsite()->getCode();
+    if($websiteCode=="coachtw"){ ?>
+        <input type="text" class="store-code" value="1" hidden="true"/>
+    <?php } else { ?>
+        <input type="text" class="store-code" value="0" hidden="true"/>
+    <?php }
+
+    $popupImage = $customBlock->getImageAttribute($option->getId());
+?>
+<div class="options-list nested" id="options-<?= $block->escapeHtmlAttr($option->getId()) ?>-list">
+    <?php if ($optionType === Option::OPTION_TYPE_RADIO && !$option->getIsRequire()):?>
+    <div class="field choice admin__field admin__field-option">
+        <input type="radio"
+               id="options_<?= $block->escapeHtmlAttr($option->getId()) ?>"
+               class="radio admin__control-radio product-custom-option"
+               name="options[<?= $block->escapeHtmlAttr($option->getId()) ?>]"
+               data-selector="options[<?= $block->escapeHtmlAttr($option->getId()) ?>]"
+               value=""
+               checked="checked"
+        />
+        <?php if (!$block->getSkipJsReloadPrice()): ?>
+            <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
+                'onclick',
+                'opConfig.reloadPrice()',
+                "options_" . $block->escapeJs($option->getId())
+            ) ?>
+        <?php endif; ?>
+        <label class="label admin__field-label" for="options_<?= $block->escapeHtmlAttr($option->getId()) ?>">
+                        <span>
+                            <?= $block->escapeHtml(__('None'))  ?>
+                        </span>
+        </label>
+    </div>
+<?php endif; ?>
+
+    <?php foreach ($option->getValues() as $value): ?>
+
+        <div id="modal" hidden>
+            <div class="modal-inner-content">
+                <button class="action-close" data-role="closeBtn" type="button"><span>X</span></button>
+                <div class="inner-modal">
+                    <div class="digitalprinting-content">
+                        <div class="digitalprinting-text">                            
+                            您已勾選加有<?php echo $option->getTitle() ." : ".$value->getTitle(); ?>的商品。
+                        </div>
+                        <div class="digitalprinting-image">
+                            <img src="<?php echo $popupImage ?>" class="imageprint" />
+                        </div>
+                        <div class="button-wrapper">
+                            <button class="modal-close" type="button" data-role="action"><span>確認</span></button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+        $checked = '';
+        $count++;
+        if ($arraySign) {
+            $checked = is_array($configValue) && in_array($value->getOptionTypeId(), $configValue) ? 'checked' : '';
+        } else {
+            $checked = $configValue == $value->getOptionTypeId() ? 'checked' : '';
+        }
+        $dataSelector = 'options[' . $option->getId() . ']';
+        if ($arraySign) {
+            $dataSelector .= '[' . $value->getOptionTypeId() . ']';
+        }
+        ?>
+
+        <div class="field choice admin__field admin__field-option">
+            <input type="<?= $block->escapeHtmlAttr($optionType) ?>"
+                   class="<?= $optionType === Option::OPTION_TYPE_RADIO ? 'radio admin__control-radio' : 'checkbox admin__control-checkbox' ?>
+                       <?= $option->getIsRequire() ? 'required': '' ?>
+                       product-custom-option
+                        <?= $block->getSkipJsReloadPrice() ? '' : 'opConfig.reloadPrice()' ?>"
+                   name="options[<?= $block->escapeHtmlAttr($option->getId()) ?>]<?= /* @noEscape */ $arraySign ?>"
+                   id="options_<?= $block->escapeHtmlAttr($option->getId() . '_' . $count) ?>"
+                   value="<?= $block->escapeHtmlAttr($value->getOptionTypeId()) ?>"
+                <?= $block->escapeHtml($checked) ?>
+                   data-selector="<?= $block->escapeHtmlAttr($dataSelector) ?>"
+                   price="<?= $block->escapeHtmlAttr($block->getCurrencyByStore($value)) ?>"
+            />
+            <label class="label admin__field-label"
+                   for="options_<?= $block->escapeHtmlAttr($option->getId() . '_' . $count) ?>">
+                <span>
+                    <?= $block->escapeHtml($value->getTitle())?>
+                </span>
+                <?php 
+                    //echo $block->formatPrice($value);
+                ?>
+            </label>
+        </div>
+    <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<script type="text/javascript">
+
+    require([
+        "jquery",
+        "Magento_Ui/js/modal/modal"
+    ],function($, modal) {
+
+        var options = {
+            type: 'popup',
+            responsive: true,
+            modalClass: 'digitalprinting_modal',
+            buttons: [{
+                text: $.mage.__('Ok'),
+                class: 'modal-close',
+                click: function () {
+                    this.closeModal();
+                }
+            }]
+        };
+
+        var popupDefault = modal(options, $('#modal'));
+
+        $(".admin__control-checkbox").click(function() {
+            if(this.checked==true){
+                var isTwStore = $(".store-code").val();
+                if(isTwStore==1){
+                    $('#modal').modal('openModal');
+                }
+            }
+        });
+
+        $(".admin__control-radio").click(function() {
+            var popupRadio = modal(options, $('#modal'));
+            if($(this).val() != ""){
+                $.ajax({
+                    url: '/printing/ajax/getpopupimage',
+                    cache: false,
+                    showLoader: true,
+                    type: 'POST',
+                    data: {
+                        "option_value" : $(this).val()
+                    },
+                    success: function (response) {
+                        if(response.success==true){
+                            $('.imageprint').attr({src: response.image});
+                            $('#modal').modal('openModal');
+                        }
+                    },
+                    fail: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+
+    });
+
+    
+    
+</script>

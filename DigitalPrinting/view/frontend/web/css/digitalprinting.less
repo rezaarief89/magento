@@ -1,0 +1,96 @@
+.catalog-product-view {
+	.digitalprinting_modal {
+		&._show {
+			display: flex;
+			flex-direction: column;
+
+			.modal-inner-wrap {
+		        -webkit-transform: translateY(-50%);
+			    transform: translateY(-50%);
+			    top: 50%;
+			    position: relative;
+
+			    @media (max-width: 769px) {
+					height: auto;
+					position: relative;
+					width: 90%;
+					background: white !important;
+				}
+			}
+		}
+
+		&.modal-slide {
+			@media (max-width: 769px) {
+				left: 0;
+			}
+		}
+
+		.modal-header, .modal-footer {
+			display: none;
+		}
+
+		.modal-content {
+			padding: 0;
+		}
+
+		.modal-inner-wrap {
+			width: auto;
+        	max-width: 800px;
+        	margin: 0 auto;
+		}
+
+		.modal-inner-content {
+			margin-left: 0;
+	        padding: 40px;
+	        width: 100%;
+		}
+
+		.inner-modal {
+			display: flex;
+
+			.digitalprinting-image {
+				img {
+					position: relative;
+				    left: 50%;
+				    transform: translateX(-50%);
+				    max-height: ~"calc(70dvh - 80px)";
+				}
+			}
+
+			.digitalprinting-content {
+				width:100%;
+
+		        .digitalprinting-text {
+		        	font-weight: normal;
+        			line-height: 25px;
+        			font-size: 14px;
+        			margin-bottom: 10px;
+        			text-align: center;
+		        }
+
+		        * {
+		        	font-family: 'Noto Sans SC',PingFang SC,MicrosoftYaHeiUI,Microsoft Yahei,arial,sans-serif;
+		        }
+			}
+
+			.button-wrapper {
+			    width: 100%;
+			    margin-top: 10px;
+			    text-align: center;
+
+			    .modal-close {
+				    font-size: 14px;
+				    margin: 0;
+				    font-weight: normal;
+				    border-radius: 0;
+				    padding: 12px 10px;
+				    width: 100%;
+				    max-width: 400px;
+			        background: #000 !important;
+				    border: 1px solid #000;
+				    color: #fff !important;
+				}
+			}
+		}
+	}
+}

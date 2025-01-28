@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="modal_image_content" xsi:type="array">
+                    <item name="class" xsi:type="string">Wow\DigitalPrinting\Ui\DataProvider\Product\Form\Modifier\File</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="Magento\CatalogStaging\Ui\DataProvider\Product\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+       <arguments>
+           <argument name="modifiers" xsi:type="array">
+               <item name="wow-digitalprinting-option-all" xsi:type="array">
+                   <item name="class" xsi:type="string">Wow\DigitalPrinting\Ui\DataProvider\Product\Form\Modifier\All</item>
+                   <item name="sortOrder" xsi:type="number">71</item>
+               </item>
+           </argument>
+       </arguments>
+   </virtualType>
+   <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+       <arguments>
+           <argument name="modifiers" xsi:type="array">
+               <item name="wow-digitalprinting-option-all" xsi:type="array">
+                   <item name="class" xsi:type="string">Wow\DigitalPrinting\Ui\DataProvider\Product\Form\Modifier\All</item>
+                   <item name="sortOrder" xsi:type="number">71</item>
+               </item>
+           </argument>
+       </arguments>
+   </virtualType>
+   <virtualType name="Wow\DigitalPrinting\Ui\DataProvider\Product\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+       <arguments>
+           <argument name="modifiers" xsi:type="array">
+           </argument>
+       </arguments>
+   </virtualType>
+   <type name="Wow\DigitalPrinting\Ui\DataProvider\Product\Form\Modifier\All">
+       <arguments>
+           <argument name="pool" xsi:type="object">Wow\DigitalPrinting\Ui\DataProvider\Product\Form\Modifier\Pool</argument>
+       </arguments>
+   </type>
+   <virtualType name="Wow\DigitalPrinting\Ui\DataProvider\Product\Form\Modifier\Pool">
+       <arguments>
+           <argument name="modifiers" xsi:type="array">
+               <item name="wow-digitalprinting-option-base" xsi:type="array">
+                   <item name="class" xsi:type="string">Wow\DigitalPrinting\Ui\DataProvider\Product\Form\Modifier\Base</item>
+                   <item name="sortOrder" xsi:type="number">72</item>
+               </item>
+           </argument>
+       </arguments>
+   </virtualType>
+
+
+    <!-- Image Uploader -->
+    <virtualType name="VirtualTypeName" type="Wow\DigitalPrinting\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">catalog/product/file</argument>
+            <argument name="basePath" xsi:type="string">catalog/product/file</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Wow\DigitalPrinting\Controller\Adminhtml\Upload\Image">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">VirtualTypeName</argument>
+        </arguments>
+    </type>
+</config>
