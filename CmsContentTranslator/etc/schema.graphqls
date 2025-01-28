@@ -1,0 +1,220 @@
+type Query {
+    cmsPage (
+        previewdate: String @doc(description: "Date of CMS items")
+    ):  CmsPage @resolver(class: "Magento\\CmsGraphQl\\Model\\Resolver\\Page")
+}
+
+type CmsPage @doc(description: "Contains details about a CMS page.") {
+    content_json: [JsonAllContentItems] @resolver(class: "Wow\\CmsContentTranslator\\Model\\Resolver\\CmsPage\\Translator") @doc(description: "Contains CMS page content in JSON format.")
+}
+
+type JsonAllContentItems {
+    contents : [JsonAllContent]
+}
+
+type JsonAllContent {
+    data_content_type: String
+    class: String
+    data_type: String
+    data_appearance: String
+    data_enable_parallax: Boolean
+    data_parallax_speed: Int
+    data_background_images: ImageSrcSet
+    data_background_type: String
+    data_video_loop: Boolean
+    data_video_play_only_visible: Boolean
+    data_video_lazy_load: Boolean
+    data_video_fallback_src: String
+    data_element: String
+    data_pb_style: String
+    full_width: Boolean
+    items : [ContentJson]
+}
+
+type ContentJson {
+    class: String
+    value: String
+    data_content_type: String
+    data_appearance: String
+    data_autoplay: Boolean
+    data_autoplay_speed: Int
+    data_fade: String
+    data_type: String
+    data_infinite_loop: Boolean
+    data_show_arrows: Boolean
+    data_show_dots: Boolean
+    data_element: String
+    data_pb_style: String
+    data_show_button: String
+    data_show_overlay: String
+    data_platform_applicability: String
+    data_start_date: String
+    data_end_date: String
+    data_tab_name: String
+    data_background_images: ImageSrcSet
+    slides: [SlideAndBannerItems]
+    banner_settings : SlideAndBannerItems
+    image_settings : ImageSettings
+    line_settings : LineSettings
+    conditions: ProductConditions
+    src: String
+    items: [ContentJson]
+    html_attributes : String
+}
+
+type SlideAndBannerItems {
+    link_settings: LinkSettings
+    items: [ContentJsonSlidesItems]
+    wrapper_style: String
+    style: String
+    data_background_images: ImageSrcSet
+    data_content_type: String
+    data_slide_name: String
+    data_appearance: String
+    data_show_button: String
+    data_show_overlay: String
+    data_element: String
+}
+
+type ImageSettings {
+    alt: String
+    title: String
+    data_image_dimensions: ImageDimensions
+    data_pb_style: String
+    scrset: ImageSrcSet
+}
+
+type LineSettings {
+    style: String
+}
+
+type ProductConditions {
+    template: String
+    anchor_text: String
+    id_path: String
+    show_pager: Int
+    products_count: Int
+    condition_option: String
+    condition_option_value: String
+    type_name: String
+    sort_order: String
+    sku_list: String
+    widget_conditions : [WidgetCondition]
+}
+
+type LinkSettings {
+    url_path: String
+    target: String
+    link_type: String
+}
+
+type HTMLAttributes {
+    h1: String
+    span: String
+    data_category_id : String
+    json_value: String
+}
+
+type CategoryTree {
+    content_json: [CategoryContents] @resolver(class: "Wow\\CmsContentTranslator\\Model\\Resolver\\Category\\Translator") @doc(description: "Contains CMS page content in JSON format.")
+}
+
+type CategoryContents {
+    contents : [CategoryRows]
+}
+
+type CategoryRows {
+    rows : [JsonCatDescription]
+}
+
+type JsonCatDescription {
+	class: String
+    value: String
+    data_type: String
+    data_appearance: String
+    data_content_type: String
+    data_appearance: String
+    data_autoplay: Boolean
+    data_autoplay_speed: Int
+    data_fade: String
+    data_infinite_loop: Boolean
+	data_background_images: ImageSrcSet
+    data_show_arrows: Boolean
+    data_show_dots: Boolean
+    data_element: String
+    data_pb_style: String
+	data_grid_size: String
+    data_show_button: String
+    data_show_overlay: String
+    data_platform_applicability: String
+    data_start_date: String
+    data_end_date: String
+    slides: [SlideAndBannerItems]
+    banner_settings : SlideAndBannerItems
+    image_settings : ImageSettings
+    line_settings : LineSettings
+    conditions: ProductConditions
+    src: String
+    items: [ContentJson]
+    attributes : [HTMLAttributes]
+    html_attributes : String
+}
+
+type JsonDescriptionItems {
+    class: String
+    data_content_type: String
+    data_element: String
+    data_pb_style: String
+    data_type: String
+    data_appearance: String
+    items: [JsonDescriptionItemChildren]
+}
+
+type ImageSrcSet {
+    desktop_image: String
+    mobile_image: String
+    value : String
+}
+
+type ContentJsonSlidesItems {
+    data_element: String
+    value: String
+}
+
+type BannerSetting {
+    items: SlideAndBannerItems
+}
+
+type BannerLinkSettings {
+    url_path: String
+    target: String
+    link_type: String
+    title: String
+    data_mobile_banner: String
+}
+
+type WidgetCondition {
+    type : String
+    aggregator : String
+    value : String
+    child : [WidgetConditionChild]
+}
+
+type WidgetConditionChild {
+    attribute : String
+    operator : String
+    value : String
+}
+
+type ImageDimensions {
+    height: Int
+    width: Int
+    ratio: Float
+}
+
+type JsonDescriptionItemChildren {
+    class: String
+    data_content_type: String
+    data_appearance: String
+    data_background_images : ImageSrcSet
+}
