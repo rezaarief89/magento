@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/consumer.xsd">
+    <consumer name="wow.cyber.order"
+              queue="wow.cyber.order"
+              connection="db"
+              maxMessages="5000"
+              consumerInstance="Magento\Framework\MessageQueue\Consumer"
+              handler="Wow\CybersourceOrderReport\Model\Queue\Consumer::process"/>
+</config>

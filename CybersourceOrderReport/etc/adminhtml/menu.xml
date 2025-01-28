@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Wow_CyberReport::main" title="Cyber Source" translate="title" module="Wow_CybersourceOrderReport" sortOrder="32" parent="Magento_Reports::report" resource="Wow_CyberReport::main"/>
+        <add id="Wow_CyberReport::report" action="wow_cyber/report/index" title="Cyber Source Sales Report" translate="title" module="Wow_CybersourceOrderReport" sortOrder="11" parent="Wow_CyberReport::main" resource="Wow_CyberReport::report"/>
+    </menu>
+</config>

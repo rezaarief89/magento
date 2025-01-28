@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="wow_retrieve_order" xsi:type="object">Wow\CybersourceOrderReport\Console\Command\RetrieveOrder</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="wow_cyber_report_listing_data_source" xsi:type="string">Wow\CybersourceOrderReport\Model\ResourceModel\ReportTable\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- <virtualType name="Wow\CybersourceOrderReport\Model\ResourceModel\ReportTable\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">wow_cybersource_order_report</argument>
+            <argument name="resourceModel" xsi:type="string">Wow\CybersourceOrderReport\Model\ResourceModel\ReportTable</argument>
+        </arguments>
+    </virtualType> -->
+</config>
