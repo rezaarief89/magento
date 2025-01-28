@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">wow_customwidget_signup_listing.wow_customwidget_signup_listing_data_source</item>
+		</item>
+	</argument>
+	<settings>
+		<spinner>wow_customwidget_signup_columns</spinner>
+		<deps>
+			<dep>wow_customwidget_signup_listing.wow_customwidget_signup_listing_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="wow_customwidget_signup_listing_data_source" component="Magento_Ui/js/grid/provider">
+		<settings>
+			<storageConfig>
+				<param name="indexField" xsi:type="string">signup_id</param>
+			</storageConfig>
+			<updateUrl path="mui/index/render"/>
+		</settings>
+		<aclResource>Wow_CustomSignupWidget::signup</aclResource>
+		<dataProvider name="wow_customwidget_signup_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+			<settings>
+				<requestFieldName>id</requestFieldName>
+				<primaryFieldName>signup_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<listingToolbar name="listing_top">
+		<settings>
+			<sticky>true</sticky>
+		</settings>
+				<filterSearch name="fulltext"/>    
+		<bookmark name="bookmarks"/>
+		<columnsControls name="columns_controls"/>
+		<filters name="listing_filters"/>
+		<paging name="listing_paging"/>
+		<exportButton class="Magento\Ui\Component\ExportButton" component="Magento_Ui/js/grid/export" displayArea="dataGridActions">
+    <settings>
+        <options>
+            <option name="csv" xsi:type="array">
+                <item name="value" xsi:type="string">csv</item>
+                <item name="label" xsi:type="string" translate="true">CSV</item>
+                <item name="url" xsi:type="string">mui/export/gridToCsv</item>
+            </option>
+            <option name="xml" xsi:type="array">
+                <item name="value" xsi:type="string">xml</item>
+                <item name="label" xsi:type="string" translate="true">Excel XML</item>
+                <item name="url" xsi:type="string">mui/export/gridToXml</item>
+            </option>
+        </options>
+    </settings>
+</exportButton>
+	</listingToolbar>
+	
+	<columns name="wow_customwidget_signup_columns">
+		<selectionsColumn name="ids">
+			<settings>
+				<indexField>signup_id</indexField>
+			</settings>
+		</selectionsColumn>
+		<column name="store_id" class="Wow\CustomSignupWidget\Ui\Component\Listing\Column\StoreName">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">Store Name</label>
+			</settings>
+		</column>
+		<column name="email">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Registered Email</label>
+			</settings>
+		</column>
+		<column name="page">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Visited Page</label>
+			</settings>
+		</column>
+		<column name="created_at">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">dateRange</item>
+					<item name="label" xsi:type="string" translate="true">Created At</item>
+				</item>
+			</argument>
+		</column>
+	</columns>
+</listing>

@@ -1,0 +1,6 @@
+<?xml version="1.0"?> 
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Wow_CustomSignupWidget::menu" title="Sign Up" module="Wow_CustomSignupWidget" sortOrder="99" parent="Wow_ProductLabel::view" action="wow_customwidget/signup/index" resource="Wow_CustomSignupWidget::menu"/>
+    </menu>
+</config>

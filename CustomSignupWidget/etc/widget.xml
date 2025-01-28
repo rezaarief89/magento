@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:helloworld:Magento_Widget:etc/widget.xsd">
+	<widget class="Wow\CustomSignupWidget\Block\Widget\Signup" id="wow_customwidget_signup">
+		<label>Sign Up Widget</label>
+		<description>Sign Up for Event</description>
+		<parameters>
+			<parameter name="widget_signup_header" sort_order="10" visible="true" xsi:type="text">
+				<label>Signup Header Text</label>
+			</parameter>
+			<parameter name="widget_signup_label" sort_order="10" visible="true" xsi:type="text">
+				<label>Signup Label</label>
+			</parameter>
+			<parameter name="widget_signup_url" sort_order="10" visible="true" xsi:type="text">
+				<label>Redirect URL</label>
+			</parameter>
+		</parameters>
+	</widget>
+</widgets>

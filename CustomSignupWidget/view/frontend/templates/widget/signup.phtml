@@ -1,0 +1,32 @@
+<?php
+
+$urlInterface = \Magento\Framework\App\ObjectManager::getInstance()
+    ->get(\Magento\Framework\UrlInterface::class);
+$currentUrl = $urlInterface->getCurrentUrl();
+?>
+
+<?php if($block->getData('widget_signup_header')): ?>
+	<h3 class='widget-signup-header'><?php echo $block->getData('widget_signup_header'); ?></h3>
+<?php endif; ?>
+<?php if($block->getData('widget_signup_label')): ?>
+	<p class='widget-signup-label'><?php echo $block->getData('widget_signup_label'); ?></p>
+<?php endif; ?>
+<form class="form signup" action="/customwidget/action/signup" method="post" id="customsignup-validate-detail">
+	<?php if($block->getData('widget_signup_url')): ?>
+		<input type="hidden" name="redirect_url" id="redirect_url" value="<?php echo $block->getData('widget_signup_url'); ?>">
+	<?php endif; ?>
+	<input type="hidden" name="current_url" id="current_url" value="<?php echo $currentUrl; ?>">
+	<input name="email" type="email" id="signup_email" placeholder="Email" required="required" data-validate="{required:true, 'validate-email':true}">
+	<button class="action submit primary" title="Submit" id="signup_submit" type="submit">Submit</button>
+</form>
+
+<style>
+	#signup_submit {
+		margin-left:10px;
+	}
+	.form.signup {
+		display: flex;
+		align-items: flex-end;
+		width: 50%;
+	}
+</style>
