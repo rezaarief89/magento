@@ -1,0 +1,100 @@
+<h1>Ipay88 Repush Page</h1>
+
+<form action="<?php echo $block->getFormAction() ?>" method="post" id="repush-form">
+    <div class="form-label">
+        <label>MerchantCode</label>
+        <input name="MerchantCode" type="text" value=<?php echo $block->getMerchantCode()?>>
+    </div>
+    <div class="form-label">
+        <label>PaymentId</label>
+        <input name="PaymentId" type="text" value=2>
+    </div>
+    <div class="form-label">
+        <label>RefNo</label>
+        <input name="RefNo" type="text">
+    </div>
+    <div class="form-label">
+        <label>Amount</label>
+        <input name="Amount" type="text">
+    </div>
+    <div class="form-label">
+        <label>Currency</label>
+        <input name="Currency" type="text" value="MYR">
+    </div>
+    <div class="form-label">
+        <label>Status</label>
+        <input name="Status" type="text" value=1>
+    </div>
+    <div class="form-label">
+        <label>Signature</label>
+        <input name="Signature" id="Signature-field" type="text" readOnly>
+    </div>
+    <!-- <input type="submit" value="Send"> -->
+    <button type="submit" id="form-submit-button" style="display:none">Submit</button>
+</form>
+<br/>
+<button id="generate-sign">Generate Signature</button>
+<button id="requery">Requery</button>
+
+<style>
+    .form-label{
+        padding-bottom:15px;
+    }
+</style>
+
+<script>
+    require(
+        [
+            'jquery'
+        ],
+        function($) {
+			
+			$("#generate-sign").on("click",function(){
+                var form  = $("#repush-form");
+				$.ajax({
+					type: "POST",
+					data: form.serialize(),
+					url: "<?php echo $block->getUrl('wowipay/repush/generate');?>",
+					showLoader: true,
+					success: function(result){
+                        console.log(result);
+                        var formButton = $("#form-submit-button");
+
+                        if(result.success == true){
+                            formButton.show();
+                            $("#Signature-field").val(result.signature);
+                        }else{
+                            formButton.hide();
+                            $("#Signature-field").val("");
+                        }
+					}
+					
+				});
+			});
+
+            $("#requery").on("click",function(){
+                var form  = $("#repush-form");
+				$.ajax({
+					type: "POST",
+					data: form.serialize(),
+					url: "<?php echo $block->getUrl('ipay88/payment/requery');?>",
+					showLoader: true,
+					success: function(result){
+                        console.log(result);
+                        // var formButton = $("#form-submit-button");
+
+                        // if(result.success == true){
+                        //     formButton.show();
+                        //     $("#Signature-field").val(result.signature);
+                        // }else{
+                        //     formButton.hide();
+                        //     $("#Signature-field").val("");
+                        // }
+					}
+					
+				});
+			});
+
+		}
+	);
+</script>

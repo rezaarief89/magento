@@ -1,0 +1,136 @@
+<h1>Ipay88 Create Order Page</h1>
+
+<form action="<?php echo $block->getFormAction() ?>" method="post" id="create-order-form">
+    <div class="form-label">
+        <label>MerchantCode</label>
+        <input type="text" name="MerchantCode" value="<?php echo $block->getMerchantCode() ?>" required>
+    </div>
+    <div class="form-label">
+        <label>RefNo</label>
+        <input type="text" name="RefNo" value="000000028" required>
+    </div>
+    <div class="form-label">
+        <label>RequestType</label>
+        <input type="text" name="RequestType" value="10" required>
+    </div>
+    <div class="form-label">
+        <label>Remark (Optional)</label>
+        <input type="text" name="Remark" value="Simulator Testing">
+    </div>
+    <div class="form-label">
+        <label>Amount</label>
+        <input type="text" name="Amount" value="1.00" required>
+    </div>
+    <div class="form-label">
+        <label>Currency</label>
+        <input type="text" name="Currency" value="MYR" required>
+    </div>
+    <div class="form-label">
+        <label>Product Description</label>
+        <input type="text" name="ProdDesc" value="7 days 6 night Venice romantic trip." required>
+    </div>
+    <div class="form-label">
+        <label>Customer Name</label>
+        <input type="text" name="Name" value="James Watson" required>
+    </div>
+    <div class="form-label">
+        <label>Customer Email</label>
+        <input type="text" name="Email" value="testing@ipay88.com.my" required>
+    </div>
+    <div class="form-label">
+        <label>ContactNumber</label>
+        <input type="text" name="ContactNumber" value="0123456789" required>
+    </div>
+    <div class="form-label">
+        <label>Customer Id Number (Optional)</label>
+        <input type="text" name="IdNumber" value="12345676789">
+    </div>
+    <div class="form-label">
+        <label>Customer Id Type (Optional)</label>
+        <input type="text" name="IdType" value="1">
+    </div>
+    <div class="form-label">
+        <label>Billing Address Line1</label>
+        <input type="text" name="BillingAddressLine1" value="Billing AddressLine1" required>
+    </div>
+    <div class="form-label">
+        <label>Billing Address State</label>
+        <input type="text" name="BillingAddressState" value="Selangor" required>
+    </div>
+    <div class="form-label">
+        <label>Billing Address City</label>
+        <input type="text" name="BillingAddressCity" value="Kuala Lumpur" required>
+    </div>
+    <div class="form-label">
+        <label>Billing Address Postal Code</label>
+        <input type="text" name="BillingAddressPostalCode" value="53210" required>
+    </div>
+    <div class="form-label">
+        <label>Billing Address Country</label>
+        <input type="text" name="BillingAddressCountry" value="Malaysia"> required
+    </div>
+    <div class="form-label">
+        <label>	iPay88 Payment Id (Optional)</label>
+        <input type="text" name="PaymentId" value="10">
+    </div>
+    <div class="form-label">
+        <label>	Signature Type</label>
+        <input type="text" name="SignatureType" value="HMACSHA512" readOnly required>
+    </div>
+    <div class="form-label">
+        <label>	Signature</label>
+        <!-- <input type="text" name="Signature" id="Signature-field" value="4d3d671a836647048d0e5bbd8aab396920c33d5f113eed30de2771c1c763bba24ebd11e6f814edbda0eb6561495ec452c3b9cf1ebcc07e44febbaeb588f886b8"> -->
+        <input type="text" name="Signature" id="Signature-field" value="" readOnly required>
+    </div>
+    <div class="form-label">
+        <label>	Response URL</label>
+        <input type="text" name="ResponseURL" value="http://gmy.appscentral.net/ipay88/payment/response">
+    </div>
+    <div class="form-label">
+        <label>	Backend URL</label>
+        <input type="text" name="BackendURL" value="http://gmy.appscentral.net/ipay88/payment/ipn">
+    </div>
+    <button type="submit" id="form-submit-create-button" style="display:none">Submit</button>
+</form>
+<br/>
+<button id="generate-sign">Generate Signature</button>
+
+<style>
+    .form-label{
+        padding-bottom:15px;
+    }
+</style>
+
+<script>
+    require(
+        [
+            'jquery'
+        ],
+        function($) {
+			
+			$("#generate-sign").on("click",function(){
+                var form  = $("#create-order-form");
+				$.ajax({
+					type: "POST",
+					data: form.serialize(),
+					url: "<?php echo $block->getUrl('wowipay/order/generate');?>",
+					showLoader: true,
+					success: function(result){
+                        console.log(result);
+                        var formButton = $("#form-submit-create-button");
+
+                        if(result.success == true){
+                            formButton.show();
+                            $("#Signature-field").val(result.signature);
+                        }else{
+                            formButton.hide();
+                            $("#Signature-field").val("");
+                        }
+					}
+					
+				});
+			});
+
+		}
+	);
+</script>
