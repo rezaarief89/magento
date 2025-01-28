@@ -1,0 +1,26 @@
+{{template config_path="design/email/header_template"}}
+
+<!--@subject {{trans "Test Email"}}  @-->
+<table>
+    <tr>
+        <td colspan="3">
+            {{trans "Test Email"}}
+        </td>
+    </tr>
+
+    <tr>
+        &nbsp;
+    </tr>
+
+    <tr>
+        <td>
+            QR CODE
+        </td>
+    </tr>
+
+    {{var qrCont | raw}}
+
+</table>
+
+
+{{template config_path="design/email/footer_template"}} 
