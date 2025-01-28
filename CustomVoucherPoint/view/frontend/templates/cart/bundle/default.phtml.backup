@@ -1,0 +1,234 @@
+<?php
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// phpcs:disable Magento2.Files.LineLength.MaxExceeded
+
+/** @var $block \Smartosc\CustomBundleProduct\Block\Render\BundleRender */
+/**  @var $bundleHelper \Smartosc\CustomBundleProduct\Helper\Data */
+
+$bundleHelper = $this->helper('Smartosc\CustomBundleProduct\Helper\Data');
+$_item = $block->getItem();
+$_product = $_item->getProduct();
+$productId = (int)$_product->getId();
+$isVisibleProduct = $_product->isVisibleInSiteVisibility();
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper(Magento\Msrp\Helper\Data::class);
+$canApplyMsrp = false;
+/** @var \Smartosc\CustomBundleProduct\ViewModel\Cart\Item\Bundle\Renderer $viewModel */
+$viewModel = $block->getViewModel();
+$optionsProduct = $viewModel->getOptions($_item);
+$flag=true;
+?>
+<tbody class="cart item">
+<?php
+foreach ($optionsProduct as $item):
+    $block->setProduct($item);
+    $product = $block->getProduct();
+    $isReportServiceNotRequire = $bundleHelper->isReportServiceProduct($item->getProductId());
+?>
+<?php  if ($item instanceof \Magento\Catalog\Model\Product): ?>
+    <?php  $childQuoteItemId = $viewModel->getChildQuoteItemId($_item, $product);  ?>
+<tr class="bundle-group item-info" data-item-id="<?=$childQuoteItemId?>" data-parent-item-id="<?=$_item->getId()?>">
+    <td data-th="<?= $block->escapeHtmlAttr(__('Item')) ?>" class="col item">
+        <?php if ($block->hasProductUrl()) :?>
+            <a href="<?= $block->escapeUrl($block->getProductUrl()) ?>"
+                title="<?= $block->escapeHtmlAttr($block->getProductName()) ?>"
+                tabindex="-1"
+                class="product-item-photo">
+        <?php else :?>
+            <span class="product-item-photo">
+        <?php endif;?>
+        <?= $block->getImage($block->getProductForThumbnail(), 'cart_page_product_thumbnail')->toHtml() ?>
+        <?php if ($block->hasProductUrl()) :?>
+            </a>
+        <?php else :?>
+            </span>
+        <?php endif; ?>
+        <div class="product-item-details">
+            <strong class="product-item-name">
+                <?php if ($block->hasProductUrl()) :?>
+                    <a href="<?= $block->escapeUrl($block->getProductUrl()) ?>"><?= $block->escapeHtml($block->getProductName()) ?></a>
+                <?php else :?>
+                    <?= $block->escapeHtml($block->getProductName()) ?>
+                <?php endif; ?>
+            </strong>
+            <dl class="product-item-code">
+                <dt><?= __('Item Code') ?>: </dt>
+                <dd><?= $viewModel->getItemCode($product) ?></dd>
+            </dl>
+
+            <?php  foreach ($viewModel->getProductAttributes($product) as $label => $value): ?>
+                <dl class="product-item-code <?=$label?>">
+                    <dt><?= $value['label'] ?> </dt>
+                    <dd><?= $value['title'] ?></dd>
+                </dl>
+            <?php endforeach; ?>
+
+
+            <?php if ($messages = $block->getMessages()) :?>
+                <?php foreach ($messages as $message) :?>
+                    <div class= "cart item message <?= $block->escapeHtmlAttr($message['type']) ?>">
+                        <div><?= $block->escapeHtml($message['text']) ?></div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+            <?php if ($addInfoBlock) :?>
+                <?= $addInfoBlock->setItem($_item)->toHtml() ?>
+            <?php endif;?>
+            <?php if($flag): ?>
+                <div class="actions-toolbar">
+                    <?php /* @escapeNotVerified */ echo $block->getActions($_item) ?>
+                </div>
+            <?php endif;?>
+        </div>
+    </td>
+
+    <?php if ($canApplyMsrp) :?>
+        <td class="col msrp" data-th="<?= $block->escapeHtmlAttr(__('Price')) ?>">
+            <span class="pricing msrp">
+                <span class="msrp notice"><?= $block->escapeHtml(__('See price before order confirmation.')) ?></span>
+                <?php $helpLinkId = 'cart-msrp-help-' . $_item->getId(); ?>
+                <a href="#" class="action help map"
+                    id="<?= ($block->escapeHtmlAttr($helpLinkId)) ?>"
+                    data-mage-init='{"addToCart":{
+                                        "helpLinkId": "#<?= $block->escapeJs($block->escapeHtml($helpLinkId)) ?>",
+                                        "productName": "<?= $block->escapeJs($block->escapeHtml($product->getName())) ?>",
+                                        "showAddToCart": false
+                                        }
+                                    }'
+                >
+                    <span><?= $block->escapeHtml(__("What's this?")) ?></span>
+                </a>
+            </span>
+        </td>
+    <?php else :?>
+        <td class="col price" data-th="<?= $block->escapeHtmlAttr(__('Price')) ?>">
+            <?php $childItem = $viewModel->getChildQuoteItem($_item, $product) ?>
+            <?= $block->getUnitPriceHtml($childItem) ?>
+        </td>
+    <?php endif; ?>
+    <td class="col qty" data-th="<?= $block->escapeHtmlAttr(__('Qty')) ?>">
+        <div class="field qty">
+            <label class="label" for="cart-<?php /* @escapeNotVerified */ echo $childQuoteItemId ?>-qty">
+                <span><?php /* @escapeNotVerified */ echo __('Qty') ?></span>
+            </label>
+            <div class="control qty <?php if(!$flag){ echo("hidden-field"); } ?>" data-mage-init='{"Magento_Checkout/js/minicart/quantity": {"elementId": "cart-<?php /* @escapeNotVerified */ echo $childQuoteItemId ?>"}}'>
+                <span class="edit-qty minus"  <?php if(!$flag):?>data-off="true"<?php endif;?>  data-role="minusAction-cart-<?php /* @escapeNotVerified */ echo $childQuoteItemId ?>">
+                    <?php if($flag): ?>
+                        <i class="ion-ios-minus-outline"></i>
+                    <?php endif; ?>
+                </span>
+                <input id="cart-<?php /* @escapeNotVerified */ echo $childQuoteItemId ?>-qty"
+                        data-id="cart-<?php /* @escapeNotVerified */ echo $childQuoteItemId ?>"
+                        name="cart[<?= $block->escapeHtmlAttr($_item->getId()) ?>][qty]"
+                        data-cart-item-id="<?php /* @escapeNotVerified */ echo $_item->getSku() ?>"
+                        value="<?php /* @escapeNotVerified */ echo $block->getQty() ?>"
+                        type="number"
+                        <?php echo !$flag?'disabled':'';?>
+                        size="4"
+                        title="<?php echo $block->escapeHtml(__('Qty')); ?>"
+                        class="input-text input-qty qty <?php if(!$flag){ echo("hidden-input"); } ?>"
+                        maxlength="12"
+                        data-validate='{"required-number":true, "validate-item-quantity":{"minAllowed":0, "maxAllowed":10000}}'
+                        data-role="cart-item-qty"/>
+                <span class="edit-qty plus" <?php if(!$flag):?>data-off="true"<?php endif;?> data-role="plusAction-cart-<?php /* @escapeNotVerified */ echo $childQuoteItemId ?>">
+                    <?php if($flag): ?>
+                        <i class="ion-ios-plus-outline"></i>
+                    <?php endif; ?>
+                </span>
+            </div>
+        </div>
+    </td>
+
+    <td class="col discount" data-th="<?php echo $block->escapeHtml(__('Discount')); ?>">
+        <?php if ($canApplyMsrp): ?>
+            <span class="cart msrp discount">--</span>
+        <?php else: ?>
+            <span class="cart-items-discount" style="font-size:18px;padding-top:0;"><?php echo $block->convertPrice($_item->getDiscountAmount(),true); ?></span>
+        <?php endif; ?>
+    </td>
+    
+    <td class="col subtotal" data-th="<?= $block->escapeHtmlAttr(__('Subtotal')) ?>">
+        <?php if ($canApplyMsrp) :?>
+            <span class="cart msrp subtotal">--</span>
+        <?php else :?>
+            <?= $block->getRowTotalHtmlForItem($_item,$product) ?>
+        <?php endif; ?>
+    </td>
+
+    <td colspan="1" class="actions">
+        <?php if($flag): ?>
+            <div class="actions-toolbar hidden-xs">
+                <?= /* @noEscape */ $block->getActions($_item) ?>
+            </div>
+        <?php endif; ?>
+    </td>
+</tr>
+<?php $flag=false;?>
+    <?php else:?>
+        <tr class="bundle-group item-info">
+            <td data-th="Item" class="col item">
+                    <span class="product-item-photo">
+
+<span class="product-image-container" style="width:200px;">
+    <span class="product-image-wrapper" style="padding-bottom: 100%;">
+        <?php $productImage = $item->getProductImage() ?>
+        <img class="product-image-photo img-thumbnail" src="<?= $productImage['src']??'' ?>" width="<?= $productImage['width']??'' ?>" height="<?= $productImage['height']??'' ?>" alt="<?= $productImage['alt']??'' ?>"></span>
+</span>
+                    </span>
+                <div class="product-item-details">
+                    <strong class="product-item-name">
+                        <?= $item->getProductName() ?>                            </strong>
+                    <dl class="product-item-code">
+                        <dt><?= __('Item Code') ?>: </dt>
+                        <dd><?= $item->getProductSku() ?></dd>
+                    </dl>
+                </div>
+            </td>
+            <td class="col price" data-th="Price">
+            <span class="price" data-label="price">
+    <span class="cart-price"><span
+                class="price">
+            <?php if (!$isReportServiceNotRequire): ?>
+            <?= $item->getProductPrice() ?>
+            <?php endif; ?>
+        </span>
+    </span>
+</span></td>
+
+            <td class="col qty" data-th="Qty">
+                <div class="field qty">
+                    <label class="label" for="cart-report-service">
+                        <span><?= __('Qty') ?></span>
+                    </label>
+                    <?php if (!$isReportServiceNotRequire): ?>
+                    <div class="control qty hidden-field">
+                <span class="edit-qty minus disabled" data-off="true" data-role="minusAction-cart-report-service">
+                                    </span>
+                        <input id="cart-report-service" name="cart-report-service" value="0" type="number" disabled=""
+                               size="4" title="Qty" class="input-text qty hidden-input" maxlength="12">
+                        <span class="edit-qty plus disabled" data-off="true" data-role="plusAction-cart-report-service">
+                                    </span>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </td>
+            <td class="col subtotal" data-th="Subtotal">
+                        <span class="price-including-tax" data-label="Incl. Tax">
+                    <span class="cart-price">
+                    <span class="price">
+                        <?php if (!$isReportServiceNotRequire): ?>
+                        <?= $this->helper('Magento\Checkout\Helper\Data')->formatPrice($item->getSubTotal()) ?>
+                        <?php else: echo __("Not Require");?>
+                        <?php endif; ?>
+                    </span>
+                    </span>
+
+            </span>
+            </td>
+            <td colspan="1" class="actions">
+            </td>
+        </tr>
+<?php endif; ?>
+<?php endforeach; ?></tbody>

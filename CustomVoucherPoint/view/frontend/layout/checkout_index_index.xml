@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Fef_CustomVoucherPoint::css/zoku-checkout.css"/>
+    </head>
+    
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                    
+                                                        <item name="beforeMethods" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="rewards" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Fef_CustomVoucherPoint/js/view/checkout/payment/reward</item>
+                                                                    <item name="sortOrder" xsi:type="string">10</item>
+                                                                    <item name="children" xsi:type="array">
+                                                                        <item name="errors" xsi:type="array">
+                                                                            <item name="sortOrder" xsi:type="string">0</item>
+                                                                            <item name="component" xsi:type="string">Zoku_Rewards/js/view/checkout/payment/reward-messages</item>
+                                                                            <item name="displayArea" xsi:type="string">messages</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="proseller-discount" xsi:type="array">
+                                            <item name="sortOrder" xsi:type="string">8</item>
+                                            <item name="component" xsi:type="string">Fef_CustomVoucherPoint/js/view/proseller-discount</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="deps" xsi:type="string">checkout.steps.shipping-step.shippingAddress</item>
+                                            </item>
+                                            <item name="displayArea" xsi:type="string">proseller-discount</item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="proseller-discount-to" xsi:type="array">
+                                                    <item name="component" xsi:type="string">Fef_CustomVoucherPoint/js/view/proseller-discount/list</item>
+                                                    <item name="displayArea" xsi:type="string">proseller-discount-to</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <item name="summary" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+
+                                                <item name="totals" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <!-- sort order for this totals is configured on admin panel-->
+                                                        <!-- Stores->Configuration->SALES->Sales->General->Checkout Totals Sort Order -->
+                                                        <item name="subtotal" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Magento_Tax/js/view/checkout/summary/subtotal</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="excludingTaxMessage" xsi:type="string" translate="true">Excl. Tax</item>
+                                                                <item name="includingTaxMessage" xsi:type="string" translate="true">Incl. Tax</item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="shipping" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Magento_Tax/js/view/checkout/summary/shipping</item>
+                                                            <item name="sortOrder" xsi:type="string">20</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="excludingTaxMessage" xsi:type="string" translate="true">Excl. Tax</item>
+                                                                <item name="includingTaxMessage" xsi:type="string" translate="true">Incl. Tax</item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="tax" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Magento_Tax/js/view/checkout/summary/tax</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="title" xsi:type="string" translate="true">Tax</item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="grand-total" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Magento_Tax/js/view/checkout/summary/grand-total</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="exclTaxLabel" xsi:type="string" translate="true">Order Total Excl. Tax</item>
+                                                                <item name="inclTaxLabel" xsi:type="string" translate="true">Order Total Incl. Tax</item>
+                                                                <item name="basicCurrencyMessage" xsi:type="string" translate="true">You will be charged for</item>
+                                                                <item name="title" xsi:type="string" translate="true">Order Total</item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                                
+                                                <item name="cart_items" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="details" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="subtotal" xsi:type="array">
+                                                                    <item name="children" xsi:type="array">
+                                                                        <item name="weee_row_incl_tax" xsi:type="array">
+                                                                            <item name="component" xsi:type="string">Fef_CustomVoucherPoint/js/view/checkout/summary/item/price/row_incl_tax</item>
+                                                                        <item name="displayArea" xsi:type="string">row_incl_tax</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

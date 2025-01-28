@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Fef\CustomerSso\Controller\Customer\SyncEmail" type="Fef\CustomVoucherPoint\Controller\Customer\SyncEmail"/>
+    <preference for="Magento\Checkout\Block\Cart\Coupon" type="Fef\CustomVoucherPoint\Block\Cart\Coupon"/>
+    <preference for="Magento\Checkout\Controller\Cart\CouponPost" type="Fef\CustomVoucherPoint\Controller\Cart\CouponPost"/>
+    <preference for="Magento\Checkout\Controller\Index\Index" type="Fef\CustomVoucherPoint\Controller\Index\Index"/>
+    <preference for="Fef\CustomVoucherPoint\Api\CheckoutPointInterface" type="Fef\CustomVoucherPoint\Model\CheckoutPointManagement" />
+    <preference for="Magento\Quote\Model\Quote\Address\ToOrder" type="Fef\CustomVoucherPoint\Model\Quote\Address\ToOrder" />
+    <preference for="Magento\Quote\Model\QuoteManagement" type="Fef\CustomVoucherPoint\Model\QuoteManagement" />
+    <preference for="Smartosc\Checkout\Block\Order\Totals" type="Fef\CustomVoucherPoint\Block\Order\Totals"/>
+    <!-- <preference for="Magento\Quote\Model\Cart\CartTotalRepository" type="Fef\CustomVoucherPoint\Model\Cart\CartTotalRepository" /> -->
+    
+</config>

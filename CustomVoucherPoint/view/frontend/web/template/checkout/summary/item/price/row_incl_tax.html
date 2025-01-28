@@ -1,0 +1,66 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!-- ko if:  (isDisplayPriceWithWeeeDetails($parents[2])) -->
+<span class="cart-tax-price" data-bind="mageInit: {taxToggle: {itemTaxId : '#subtotal-item-tax-details'+$parents[2].item_id}}">
+    <span class="price" data-bind="text: getFormattedPrice(getPriceInclTax($parents[2]))"></span>
+</span>
+
+<span class="cart-tax-total" data-bind="mageInit: {taxToggle: {itemTaxId : '#subtotal-item-tax-details'+$parents[2].item_id}}">
+    <span class="price" data-bind="text: getFormattedPrice(getRowDisplayPriceInclTax($parents[2]))"></span>
+</span>
+<!-- /ko -->
+
+<!-- ko ifnot: (isDisplayPriceWithWeeeDetails($parents[2])) -->
+<span class="cart-item-price">
+    <!-- ko if:  (isDisplayOldPrice($parents[2])) -->
+        <!-- <span class="old-price" data-bind="text: getFormattedPrice(isDisplayOldPrice($parents[2]))"></span> -->
+    <!-- /ko -->
+
+    <!-- ko if:  (isHasDiscount($parents[2])) -->
+        <span class="price" style="text-decoration:line-through" data-bind="text: getFormattedPrice(getPriceInclTax($parents[2]))"></span>
+    <!-- /ko -->
+
+    <!-- ko ifnot:  (isHasDiscount($parents[2])) -->
+        <span class="price" data-bind="text: getFormattedPrice(getPriceInclTax($parents[2]))"></span>
+    <!-- /ko -->
+</span>
+
+<span class="cart-price">
+    <!-- ko if:  (isHasDiscount($parents[2])) -->
+        <span class="price" style="color: #cf2a27;" data-bind="text: getFormattedPrice(getRowDisplayPriceInclTax($parents[2]))"></span>
+    <!-- /ko -->
+
+    <!-- ko ifnot:  (isHasDiscount($parents[2])) -->
+        <span class="price" data-bind="text: getFormattedPrice(getRowDisplayPriceInclTax($parents[2]))"></span>
+    <!-- /ko -->
+    
+</span>
+<!-- /ko -->
+
+<!--ko if:  (getWeeeTaxApplied($parents[2]).length > 0)-->
+<!-- ko ifnot:  (isDisplayPriceWithWeeeDetails($parents[2])) -->
+    <span class="cart-tax-info" data-bind ="attr: {'id': 'subtotal-item-tax-details' + $parents[2].item_id}" style="display: none;"></span>
+<!-- /ko -->
+
+<!-- ko if:  (isDisplayPriceWithWeeeDetails($parents[2])) -->
+    <span class="cart-tax-info" data-bind ="attr: {'id': 'subtotal-item-tax-details' + $parents[2].item_id}" style="display: none;">
+     <!-- ko foreach: getWeeeTaxApplied($parents[2]) -->
+        <span class="weee" data-bind="attr:{'data-label':title}">
+            <span class="price" data-bind="text: $parent.getFormattedPrice(row_amount_incl_tax)"></span>
+        </span>
+     <!-- /ko -->
+    </span>
+<!-- /ko -->
+
+<!-- ko if: isDisplayFinalPrice($parents[2]) -->
+    <span class="cart-tax-total" data-bind="mageInit: {taxToggle: {itemTaxId : '#subtotal-item-tax-details'+$parents[2].item_id}}">
+        <span class="weee" data-bind="attr: {'data-label':$t('Total incl. tax')}">
+            <span class="price" data-bind="text: getFormattedPrice(getFinalRowDisplayPriceInclTax($parents[2]))"></span>
+        </span>
+    </span>
+<!-- /ko -->
+<!-- /ko -->

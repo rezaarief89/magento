@@ -1,0 +1,23 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_quote_collect_totals_after">
+        <observer name="sales_quote_collect_totals_after_voucher" instance="Fef\CustomVoucherPoint\Observer\QuoteCollectAfter" />
+    </event>
+    
+    <event name="sales_order_place_before">
+        <observer name="sales_order_place_before_redeem" instance="Fef\CustomVoucherPoint\Observer\PlaceOrdeBefore" />
+    </event>
+
+    <!-- <event name="sales_order_place_after">
+        <observer name="sales_order_place_after_calculate" instance="Fef\CustomVoucherPoint\Observer\PlaceOrderAfter" />
+    </event> -->
+
+    <event name="checkout_cart_add_product_complete">
+        <observer name="checkout_cart_add_product_complete_calculate" instance="Fef\CustomVoucherPoint\Observer\AddToCartAfter" />
+    </event>
+
+    <!-- <event name="checkout_cart_save_after">
+        <observer name="checkout_cart_save_after_voucher" instance="Fef\CustomVoucherPoint\Observer\QuoteSaveAfter" />
+    </event> -->
+    
+
+</config>

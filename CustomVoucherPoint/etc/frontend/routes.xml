@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+<router id="standard">
+    <route id="voc" frontName="voc">
+       <module name="Fef_CustomVoucherPoint" before="Fef_CustomerSso" />
+       <module name="Fef_CustomVoucherPoint" before="Magento_Checkout" />
+    </route>
+</router>
+
+</config>

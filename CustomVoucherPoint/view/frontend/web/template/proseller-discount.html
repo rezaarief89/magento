@@ -1,0 +1,14 @@
+<!-- ko if: (isVisible()) -->
+<div class="proseller-discount" data-bind ="visible: hideTitle()">
+    <div class="proseller-discount-to">
+        <div class="shipping-information-title">
+            <span>Voucher information</span>
+        </div>
+        <div class="shipping-information-content" id="proseller-discount-content">
+            <!-- ko foreach: getRegion('proseller-discount-to') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+    </div>
+</div>
+<!--/ko-->
