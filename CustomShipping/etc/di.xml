@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="fef_customcheckout_checkout_layout_processor" type="Fef\CustomShipping\Plugin\CheckoutLayoutProcessor" />
+    </type>
+    <type name="Magento\Checkout\Controller\Cart">
+        <plugin name="fef_customcheckout_checkout_cart" type="Fef\CustomShipping\Plugin\CartPlugin" />
+    </type>
+    <preference for="Smartosc\Checkout\Model\ShippingInformationManagement" type="Fef\CustomShipping\Model\ShippingInformationManagement"/>
+    <preference for="Smartosc\Sales\Model\Custom\MoreAboutShippingDescription" type="Fef\CustomShipping\Model\Custom\MoreAboutShippingDescription" />
+     <preference for="Magento\Quote\Model\Quote\Address\Rate" type="Fef\CustomShipping\Model\Rewrite\Quote\Address\Rate" />
+</config>

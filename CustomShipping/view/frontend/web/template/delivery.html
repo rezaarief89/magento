@@ -1,0 +1,78 @@
+<!--Shipping method template-->
+<li id="delivery"
+class="checkout-shipping-method"
+data-bind="fadeVisible: visible(), blockLoader: isLoading"
+role="presentation">
+<div class="checkout-shipping-method">
+    <div class="step-title" data-bind="i18n: 'Delivery Method'"  data-role="title" />
+    <div class="sub-title" data-bind="i18n: 'Please choose your delivery option'" />
+
+    <each args="getRegion('before-shipping-method-form')" render="" />
+
+    <div id="checkout-step-shipping_method"
+         class="step-content"
+         data-role="content"
+         role="tabpanel"
+         aria-hidden="false">
+        <form id="co-shipping-method-form"
+              class="form methods-shipping"
+              if="rates().length"
+              submit="setShippingInformation"
+              novalidate="novalidate">
+
+            <render args="shippingMethodListTemplate"/>
+
+            <div id="onepage-checkout-shipping-method-delivery-date">
+                <!-- ko foreach: getRegion('delivery-date') -->
+                <!-- ko template: getTemplate() -->
+                <!--/ko-->
+                <!--/ko-->
+            </div>
+
+            <div id="onepage-checkout-shipping-method-delivery-slot">
+                <!-- ko foreach: getRegion('delivery-slot') -->
+                <!-- ko template: getTemplate() -->
+                <!--/ko-->
+                <!--/ko-->
+            </div>
+
+            <div id="onepage-checkout-shipping-method-delivery-stairs">
+                <!-- ko foreach: getRegion('delivery-stairs') -->
+                <!-- ko template: getTemplate() -->
+                <!--/ko-->
+                <!--/ko-->
+            </div>
+
+            <div id="onepage-checkout-shipping-method-delivery-note">
+                <!-- ko foreach: getRegion('delivery_note') -->
+                <!-- ko template: getTemplate()-->
+                <!--/ko-->
+                <!--/ko-->
+            </div>
+
+            <div id="onepage-checkout-shipping-method-additional-load">
+                <each args="getRegion('shippingAdditional')" render="" />
+            </div>
+            <div role="alert"
+                 if="errorValidationMessage().length"
+                 class="message notice"
+                 id="message-notice">
+                <span text="errorValidationMessage()" />
+            </div>
+
+            <!-- ko if: isAllowNextAction() -->
+                <div class="actions-toolbar" id="shipping-method-buttons-container" style="display: flex;float: right;margin-top: 12px;">
+                    <div class="primary">
+                        <button data-role="opc-continue" id="opc-continue" type="submit" class="button action continue primary">
+                            <span translate="'Next'" />
+                        </button>
+                    </div>
+                </div>
+            <!-- /ko -->
+        </form>
+        <div class="no-quotes-block"
+             ifnot="rates().length > 0"
+             translate="'Sorry, no quotes are available for this order at this time'" />
+    </div>
+</div>
+</li>

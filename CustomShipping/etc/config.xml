@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <custom>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <model>Fef\CustomShipping\Model\Carrier\Custom</model>
+                <name>Far East Flora Proseller</name>
+                <title>Far East Flora Proseller</title>
+                <use_sandbox>1</use_sandbox>
+                <base_url>https://api-fareastflora.proseller-demo.com/integration/api/v1/</base_url>
+                <username></username>
+                <password></password>
+                <specificerrmsg>This shipping method is not available right now.</specificerrmsg>
+            </custom>
+        </carriers>
+    </default>
+</config>
