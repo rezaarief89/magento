@@ -1,0 +1,280 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="row">
+    <div class="col-md-6">
+        <!-- ko ifnot: isCustomerLoggedIn() -->
+
+        <!-- ko foreach: getRegion('before-login-form') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+        <form class="form form-login" data-role="email-with-possible-login"
+              data-bind="submit:login"
+              method="post" novalidate="novalidate">
+            <div class="title" data-bind="i18n: 'Registered Customers'"></div>
+            <div class="sub-title" data-bind="i18n: 'If you have an account, sign in with your email address.'"></div>
+            <fieldset id="customer-email-fieldset" class="fieldset" data-bind="blockLoader: isLoading">
+                <div class="field required">
+                    <div class="control _with-tooltip">
+                        <input class="input-text"
+                               type="text"
+                               data-bind="
+                            textInput: email,
+                            mageInit: {'mage/trim-input':{}},
+                            attr: {placeholder: $t('Email Address')}"
+                               name="username"
+                               data-validate="{required:true, 'validate-email':true}"
+                               id="customer-email" required />
+                        <label class="label" for="customer-email">
+                            <span data-bind="i18n: 'Email Address'"></span>
+                        </label>
+                        <!-- ko template: 'ui/form/element/helper/tooltip' --><!-- /ko -->
+                    </div>
+                    
+                    <div class="field">
+                        <div class="form-group">
+                            <div class="control">
+                                <input name="login[otp]" placeholder="OTP" value="" id="checkout-login-otp" type="text" class="input-text" style="display:none" title="OTP" data-validate="{required:true}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field note margin-bottom10"  id="checkout-validation-info" style="background-color:#edd8a1;display:none">Please input OTP that has been sent in your email.</div>
+                    <div class="field note margin-bottom10"  id="checkout-validation-error" style="color:red"></div>
+                </div>
+
+                <!--Hidden fields -->
+                <fieldset class="fieldset">
+                    <!-- ko foreach: getRegion('additional-login-form-fields') -->
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!-- /ko -->
+                    <div class="actions-toolbar">
+                        <input name="context" type="hidden" value="checkout" />
+                        <div class="primary">
+                            <button type="submit" class="action login primary btn btn-primary btn-login" id="checkout-btn-login" data-action="checkout-method-login"><span data-bind="i18n: 'Sign In'"></span></button>
+                        </div>
+                        <div class="secondary">
+                            <a class="margin-left15 action login-resend" href="" id="checkout-login-resend">
+                                <span data-bind="click: resendOtp">
+                                    Resend OTP
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </fieldset>
+                <!--Hidden fields -->
+            </fieldset>
+        </form>
+        <!-- /ko -->
+        <!--promotion notice-->
+        <div class="promotion-ads" data-bind="html: window.checkoutConfig.cms_block"></div>
+    </div>
+    <div class="col-md-6">
+        <!-- ko ifnot: isCustomerLoggedIn() -->
+        <!--New Customers-->
+        <form id="customer_account_create" class="register-form form step-new-customers" method="post" data-role="register" data-bind="submit: registerNewUser" novalidate="novalidate">
+            <div class="title" data-bind="i18n: 'New Customers'"></div>
+            <div class="sub-title" data-bind="i18n: 'Creating an account has many benefits: check out faster, keep more than one address, track orders and more.'"></div>
+            <fieldset class="fieldset">
+                <div class="personal-information">
+                    <p data-bind="i18n: 'Personal Information'"></p>
+                    <div class="field">
+                        <div class="form-group">
+                            <div class="control">
+                                <input type="text" name="firstname" id="first_name" class="input-text" data-bind="attr: {placeholder: $t('First Name')}" data-validate="{required:true}" required />
+                                <label class="label" for="first_name"><span data-bind="i18n: 'First Name'"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="form-group">
+                            <div class="control">
+                                <input type="text" name="lastname" id="last_name" class="input-text" data-bind="attr: {placeholder: $t('Last Name')}" data-validate="{required:true}" required />
+                                <label class="label" for="first_name"><span data-bind="i18n: 'Last Name'"></span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label for="dob" class="label">
+                        <span data-bind="i18n: 'Date of birth*'"></span>:
+                        <div class="tooltip-icon fa-question-circle">
+                            <div class="tooltip-text"><p data-bind="text: getDobTooltip()"></p></div>
+                        </div>
+
+                    </label>
+                    <div class="field dob customer-dob">
+                        <input type="hidden" class="" value="" id="dob" name="dob" autocomplete="off">
+                        <div class="date-time">
+                            <div class="dob-day">
+                                <select id="dob_dd" name="day" title="DD"
+                                        class="required-entry"
+                                        data-bind="html: showDay(),
+                                            event: {change: fortmatDateDob()}
+                                        "
+                                >
+                                </select>
+                            </div>
+                            <div class="dob-month">
+                                <select id="dob_mm" name="month" title="MM"
+                                        class="required-entry"
+                                        data-bind="html: showMonth(),
+                                            event: {change: fortmatDateDob()}
+                                        "
+                                >
+                                </select>
+                            </div>
+                            <div class="dob-year">
+                                <select id="dob_yy" name="year" title="YY"
+                                        class="required-entry"
+                                        data-bind="html: showYear(),
+                                            event: {change: fortmatDateDob()}
+                                        "
+                                >
+                                </select>
+                            </div>
+                        </div>
+
+                        <input type="text" data-validate="{'validate-date-dob':true, 'validate-dob': true}"
+                               id="dob-validate" name="dob-validate" autocomplete="off">
+
+                    </div>
+
+                    <div class="row">
+                        <div class="offset3 span3 contact_number">
+                            <div class="form-group">
+                                <label class="label">
+                                    <span data-bind="i18n: 'Mobile Number*'"></span>:
+                                    <div class="tooltip-icon fa-question-circle">
+                                        <div class="tooltip-text"><p data-bind="text: getNumberTooltip()"></p></div>
+                                    </div>
+                                </label>
+                                <div class="controls">
+                                    <div class="input-append" data-bind="html: getCountryCode()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field street required">
+                        <div class="control">
+                            <div class="form-group">
+                                <input type="text" name="street[]" data-bind="attr: {placeholder: $t('Street Address'), title: $t('Street Address')}" value="" id="street_1" class="input-text required-entry" required/>
+                                <label class="label" for="street_1"><span data-bind="i18n: 'Street Address'"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field city col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <div class="control">
+                                <input type="text" value="" data-bind="attr: {placeholder: $t('Floor/Unit'), title: $t('Floor/Unit')}" name="floor" class="input-text" id="floor" required />
+                                <label class="label" for="floor"><span data-bind="i18n: 'Floor/Unit'"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field city col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <div class="control">
+                                <input type="text" value="" data-bind="attr: {placeholder: $t('Building Name'), title: $t('Building Name')}" name="building" class="input-text" id="building" required />
+                                <label class="label" for="building"><span data-bind="i18n: 'Building Name'"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field zip col-lg-6 col-md-6 col-sm-6 col-xs-12 required">
+                        <div class="form-group">
+                            <div class="control required">
+                                <input type="text" data-bind="attr: {placeholder: $t('Zip/Postal Code'), title: $t('Zip/Postal Code')}" name="postcode" value="" id="zip" class="input-text validate-zip-international required-entry" required />
+                                <label class="label" for="zip"><span data-bind="i18n: 'Zip/Postal Code'"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field country col-lg-6 col-md-6 col-sm-6 col-xs-12 required">
+                        <div class="form-group">
+                            <div class="control required" data-bind="html: getCountryList(), afterRender: setCountryDefault()"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field company">
+                    <div class="form-group ">
+                        <div class="control">
+                            <input name="company" value="" type="text" data-bind="attr: {placeholder: $t('Company (optional)'), title: $t('Company (optional)')}" autocomplete="company" id="company" class="input-text" required>
+                            <label class="label" for="company"><span data-bind="i18n: 'Company (optional)'"></span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field email">
+                    <div class="form-group">
+                        <div class="control">
+                            <input type="email" name="email" id="email" class="input-text" data-bind="attr: {placeholder: $t('Email')}" data-validate="{required:true, 'validate-email':true}" required />
+                            <label class="label" for="email"><span data-bind="i18n: 'Email'"></span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="is_subscribed" name="is_subscribed">
+                    <label class="form-check-label" for="is_subscribed" data-bind="i18n: 'Send me Far East Flora Garden Centre new arrival updates, offers, and more.'"></label>
+                </div>
+
+                <div class="form-group form-check">
+                    <input data-validate="{required:true}" type="checkbox" class="form-check-input" id="term_policy" name="term_policy">
+                    <label for="term_policy"><span data-bind="i18n: 'I agree to Far East Flora Garden Centre '"></span>
+                        <a target="blank" data-bind="attr: { href: getTermUrl() }"><span data-bind="i18n: 'Terms & Conditions'"></span></a><span data-bind="i18n: ' and '"></span><a target="blank" data-bind="attr: { href: getPrivacyUrl() }"><span data-bind="i18n: 'Privacy Policy'"></span></a>.</label>
+                </div>
+
+                <div class="field">
+                    <div class="form-group">
+                        <div class="control">
+                            <input name="register[otp]" placeholder="OTP" value="" id="checkout-register-otp" type="text" class="input-text" style="display:none" title="OTP" data-validate="{required:true}" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="field note margin-bottom10"  id="checkout-register-validation-info" style="background-color:#edd8a1;display:none">Please input OTP that has been sent in your email.</div>
+                <div class="field note margin-bottom10"  id="checkout-register-validation-error" style="color:red"></div>
+                
+                <div class="actions-toolbar">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <button data-bind="click: navigateToNextStep" type="button" class="btn btn-continue btn-link">
+                                <span data-bind="i18n: 'Continue as guest'"></span>
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="checkout-btn-register">Create an account</button>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <a class="margin-left15 action register-resend" id="checkout-register-resend" style="display: none;">
+                                <span data-bind="click: resendOtpRegister">Resend OTP</span>
+                            </a>
+                        </div>
+                    </div>                    
+                </div>
+
+                <input type="hidden" name="default_shipping" value="1">
+                <input type="hidden" name="default_billing" value="1">
+                <input type="hidden" name="create_address" value="1" />
+                <input type="hidden" name="country_phone_code" id="country_phone_code" value="" />
+                <input type="hidden" name="telephone" id="telephone" value="" />
+                <input type="hidden" name="city" id="city" value="" />
+            </fieldset>
+        </form>
+        <!-- /ko -->
+        <!-- ko if: isCustomerLoggedIn() -->
+        <form class="form-actions" data-bind="submit: navigateToNextStep" novalidate="novalidate">
+            <div class="actions-toolbar">
+                <button data-role="opc-continue" type="submit" class="btn btn-default">
+                    <span data-bind="i18n: 'Next'"></span>
+                </button>
+            </div>
+        </form>
+        <!-- /ko -->
+    </div>
+</div>

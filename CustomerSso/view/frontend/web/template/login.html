@@ -1,0 +1,11 @@
+<li id="step_one_login" class="checkout-login-step" data-bind="fadeVisible: visible()">
+    <div class="step-title" data-bind="i18n: 'Log in or Create account'" data-role="title"></div>
+    <div id="checkout-step-shipping"
+         class="step-content"
+         data-role="content">
+        <!--Login or create account-->
+        <each if="!quoteIsVirtual" args="getRegion('customer-sso-email')" render="" />
+    </div>
+</li>
+
+

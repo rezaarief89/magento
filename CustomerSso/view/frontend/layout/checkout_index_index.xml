@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="login-step" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="sortOrder" xsi:type="string">1</item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="step-config" xsi:type="array">
+                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shipping-rates-validation" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <!--Step configuration components-->
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                                <item name="login-config" xsi:type="array">
+                                                    <item name="component" xsi:type="string">
+                                                        Fef_CustomerSso/js/view/login
+                                                    </item>
+                                                    <item name="sortOrder" xsi:type="string">1</item>
+                                                    <item name="config" xsi:type="array">
+                                                    </item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="customer-sso-email" xsi:type="array">
+                                                            <item name="component" xsi:type="string">
+                                                                Fef_CustomerSso/js/view/form/element/email
+                                                            </item>
+                                                            <item name="displayArea" xsi:type="string">customer-email
+                                                            </item>
+                                                            <item name="tooltip" xsi:type="array">
+                                                                <item name="description" xsi:type="string"
+                                                                      translate="true">We'll send your order
+                                                                    confirmation here.
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
