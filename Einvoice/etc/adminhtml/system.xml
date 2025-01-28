@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="store" translate="label" sortOrder="999">
+            <label>Wow</label>
+        </tab>
+        <section id="woweinvoiceapi" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>E-Invoice</label>
+            <tab>store</tab>
+            <resource>Wow_Einvoice::invoiceapi_config</resource>
+            <group id="api_config" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>API Configuration</label>
+                <field id="qrcodeurl" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>QR Code URL</label>
+                </field>
+                <field id="baseUrl" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Base URL</label>
+                </field>
+                <field id="clientId" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client ID</label>
+                </field>
+                <field id="clientSecret" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client Secret</label>
+                </field>
+                <field id="clientsecretencrypted" translate="label" type="textarea" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client Secret Encrypted</label>
+                </field>
+                <field id="appsecretkey" translate="label" type="textarea" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>App Secret Key</label>
+                </field>
+                <field id="clientScope" translate="label" type="textarea" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client Scope</label>
+                </field>
+                <field id="taxpayer" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Taxpayer TIN</label>
+                </field>
+                <field id="maxtry" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max Try</label>
+                    <comment>
+                        Max try to retry sync data to BDO.
+                        System will stop to retry sync data to BDO if tried time reached the max try.
+                    </comment>
+                </field>
+            </group>
+
+            <group id="notif_config" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Notification Configuration</label>
+                <field id="recepient_email" translate="label" type="textarea" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Recipient Emails</label>
+                    <comment>Use comma (,) as separator for multiple email address</comment>
+                </field>
+            </group>
+
+            <group id="test_failed" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Test Failed Transaction</label>
+                <field id="total_net_amount" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Total Net Amount</label>
+                    <comment>Fill the totalNetAmount value that need to send to BDO </comment>
+                </field>
+            </group>
+
+            <group id="start_config" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Start Sync Configuration</label>
+                <field id="startdate" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Start Datetime</label>
+                    <comment>Must follow YYYY-MM-DD HH:ii:ss format. Sync will run if currect time is more than start datetime + 5 minutes</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

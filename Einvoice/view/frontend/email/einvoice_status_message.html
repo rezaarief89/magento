@@ -1,0 +1,16 @@
+{{template config_path="design/email/header_template"}}
+
+<!--@subject {{trans "%subject" subject=$subject}}  @-->
+
+<br/>
+<p>
+    {{trans "There are error(s) when sync data to BDO."}}
+</p>
+<br/>
+<p>
+    {{var message | raw}}
+</p>
+<br/>
+<p>
+    Please assist to check. Thank you.
+</p>

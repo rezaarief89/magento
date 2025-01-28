@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+	<group id="default">
+		<job name="wow_einvoice_invoice" instance="Wow\Einvoice\Cron\Invoice" method="execute">
+			<schedule>*/10 * * * *</schedule>
+		</job>
+		<job name="wow_einvoice_creditmemo" instance="Wow\Einvoice\Cron\Creditmemo" method="execute">
+			<schedule>*/10 * * * *</schedule>
+		</job>
+		<job name="wow_einvoice_submit_invoice" instance="Wow\Einvoice\Cron\SubmitInvoice" method="execute">
+			<schedule>*/5 * * * *</schedule>
+		</job>
+		<job name="wow_einvoice_submit_creditmemo" instance="Wow\Einvoice\Cron\SubmitCreditMemo" method="execute">
+			<schedule>*/5 * * * *</schedule>
+		</job>
+		<job name="wow_einvoice_repush" instance="Wow\Einvoice\Cron\RepushSubmitDocument" method="execute">
+			<schedule>*/5 * * * *</schedule>
+		</job>
+		<job name="wow_einvoice_sendemail_log" instance="Wow\Einvoice\Cron\SendEmail" method="execute">
+			<schedule>0 */2 * * *</schedule>
+		</job>
+	</group>
+</config>

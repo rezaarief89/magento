@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="email_invoice_set_template_vars_before">
+        <observer name="einvoice_invoice_custom_fields_add_to_email" instance="Wow\Einvoice\Observer\Invoice\EmailTemplateVars"/>
+    </event>
+    <event name="email_creditmemo_set_template_vars_before">
+        <observer name="einvoice_creditmemo_custom_fields_add_to_email" instance="Wow\Einvoice\Observer\CreditMemo\EmailTemplateVars"/>
+    </event>
+</config>

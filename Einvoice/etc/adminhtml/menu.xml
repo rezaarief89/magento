@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+<!-- 		<add id="Wow::top_level" title="Wow" module="Wow_Einvoice" sortOrder="9999" resource="Magento_Backend::content"/>
+ -->		<add id="Wow_Einvoice::wow_einvoice_einvoice" title="E-Invoice Report" module="Wow_Einvoice" sortOrder="2000" resource="Magento_Backend::content" parent="Magento_Sales::sales_operation" action="wow_einvoice/einvoice/index"/>
+	</menu>
+</config>

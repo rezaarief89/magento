@@ -1,0 +1,26 @@
+{
+    "name": "wow/module-einvoice",
+    "description": "Coach Malaysia E-invoice",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        },
+        {
+            "name": "chuah pc",
+            "email": "cpc0909.cp@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Wow\\Einvoice\\": ""
+        }
+    }
+}

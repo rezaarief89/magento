@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Checkout\Controller\Cart\CouponPost" type="Wow\Einvoice\Controller\Index\CouponPost" />
+    <preference for="Magento\Checkout\Controller\Cart\UpdatePost" type="Wow\Einvoice\Controller\Index\UpdatePost" />
+	<preference for="Wow\Einvoice\Api\EinvoiceRepositoryInterface" type="Wow\Einvoice\Model\EinvoiceRepository"/>
+	<preference for="Wow\Einvoice\Api\Data\EinvoiceInterface" type="Wow\Einvoice\Model\Einvoice"/>
+	<preference for="Wow\Einvoice\Api\Data\EinvoiceSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Wow\Einvoice\Model\ResourceModel\Einvoice\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">wow_einvoice_einvoice</argument>
+			<argument name="resourceModel" xsi:type="string">Wow\Einvoice\Model\ResourceModel\Einvoice\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="wow_einvoice_einvoice_listing_data_source" xsi:type="string">Wow\Einvoice\Model\ResourceModel\Einvoice\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+	<preference for="Magento\Ui\Model\Export\ConvertToCsv" type="Wow\Einvoice\Model\Export\ConvertToCsv" />
+    <preference for="Magento\Sales\Model\Order\Email\Sender\CreditmemoSender" type="Wow\Einvoice\Model\Order\Email\Sender\CreditmemoSender" />
+    <preference for="Magento\Sales\Model\Order\Email\Sender\InvoiceSender" type="Wow\Einvoice\Model\Order\Email\Sender\InvoiceSender" />
+	<type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="wow_einvoice_gettoken" xsi:type="object">Wow\Einvoice\Console\Command\GetToken</item>
+            </argument>
+			<argument name="commands" xsi:type="array">
+                <item name="wow_einvoice_submitinvoice" xsi:type="object">Wow\Einvoice\Console\Command\SubmitInvoice</item>
+            </argument>
+			<argument name="commands" xsi:type="array">
+                <item name="wow_einvoice_submitcreditmemo" xsi:type="object">Wow\Einvoice\Console\Command\SubmitCreditMemo</item>
+            </argument>
+			<argument name="commands" xsi:type="array">
+                <item name="wow_einvoice_repush" xsi:type="object">Wow\Einvoice\Console\Command\RepushSubmitDocument</item>
+            </argument>
+			<argument name="commands" xsi:type="array">
+                <item name="wow_einvoice_sendemail" xsi:type="object">Wow\Einvoice\Console\Command\SendEmail</item>
+            </argument>
+			<argument name="commands" xsi:type="array">
+                <item name="wow_einvoice_invoice" xsi:type="object">Wow\Einvoice\Console\Command\Invoice</item>
+            </argument>
+			<argument name="commands" xsi:type="array">
+                <item name="wow_einvoice_creditmemo" xsi:type="object">Wow\Einvoice\Console\Command\CreditMemo</item>
+            </argument>
+			<argument name="commands" xsi:type="array">
+                <item name="wow_einvoice_clearimage" xsi:type="object">Wow\Einvoice\Console\Command\ClearImage</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,270 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">wow_einvoice_einvoice_listing.wow_einvoice_einvoice_listing_data_source</item>
+		</item>
+	</argument>
+	<settings>
+		<spinner>wow_einvoice_einvoice_columns</spinner>
+		<deps>
+			<dep>wow_einvoice_einvoice_listing.wow_einvoice_einvoice_listing_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="wow_einvoice_einvoice_listing_data_source" component="Magento_Ui/js/grid/provider">
+		<settings>
+			<storageConfig>
+				<param name="indexField" xsi:type="string">einvoice_id</param>
+			</storageConfig>
+			<updateUrl path="mui/index/render"/>
+		</settings>
+		<aclResource>Wow_Einvoice::einvoice</aclResource>
+		<dataProvider name="wow_einvoice_einvoice_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+			<settings>
+				<requestFieldName>id</requestFieldName>
+				<primaryFieldName>einvoice_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<listingToolbar name="listing_top">
+		<settings>
+			<sticky>true</sticky>
+		</settings>
+				<filterSearch name="fulltext"/>    
+		<bookmark name="bookmarks"/>
+		<columnsControls name="columns_controls"/>
+		<filters name="listing_filters"/>
+		<paging name="listing_paging"/>
+		<exportButton class="Magento\Ui\Component\ExportButton" component="Magento_Ui/js/grid/export" displayArea="dataGridActions">
+    <settings>
+        <options>
+            <option name="csv" xsi:type="array">
+                <item name="value" xsi:type="string">csv</item>
+                <item name="label" xsi:type="string" translate="true">CSV</item>
+                <item name="url" xsi:type="string">mui/export/gridToCsv</item>
+            </option>
+            <option name="xml" xsi:type="array">
+                <item name="value" xsi:type="string">xml</item>
+                <item name="label" xsi:type="string" translate="true">Excel XML</item>
+                <item name="url" xsi:type="string">mui/export/gridToXml</item>
+            </option>
+        </options>
+    </settings>
+</exportButton>
+	</listingToolbar>
+	
+	<columns name="wow_einvoice_einvoice_columns">
+		<selectionsColumn name="ids">
+			<settings>
+				<indexField>einvoice_id</indexField>
+			</settings>
+		</selectionsColumn>
+		<column name="pre_payment_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">prePaymentAmount</label>
+			</settings>
+		</column>
+		<column name="document_number">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">documentNumber</label>
+			</settings>
+		</column>
+		<column name="einvoice_type">
+			<settings>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <visible>false</visible>
+                <disableAction>true</disableAction>
+				<label translate="true">eInvoiceType</label>
+                <options>
+                    <option name="0" xsi:type="array">
+                        <item name="value" xsi:type="number">01</item>
+                        <item name="label" xsi:type="string" translate="true">01</item>
+                    </option>
+                    <option name="1" xsi:type="array">
+                        <item name="value" xsi:type="number">04</item>
+                        <item name="label" xsi:type="string" translate="true">04</item>
+                    </option>
+                </options>
+			</settings>
+
+		</column>
+		<column name="division_code">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">divisionCode</label>
+			</settings>
+		</column>
+		<column name="branch_code">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">branchCode</label>
+			</settings>
+		</column>
+		
+		
+		<column name="document_date" class="Wow\Einvoice\Ui\Component\Listing\Column\DocumentDate">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">dateRange</item>
+					<item name="label" xsi:type="string" translate="true">documentDate</item>
+				</item>
+			</argument>
+		</column>
+		
+		
+	
+		<column name="document_time">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">documentTime</label>
+			</settings>
+		</column>
+		<column name="original_einvoice_reference_number">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">originalEinvoiceReferenceNumber</label>
+			</settings>
+		</column>
+		<column name="original_einvoice_uuid">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">originalEinvoiceUUID</label>
+			</settings>
+		</column>
+		<column name="description_of_product_or_service">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">descriptionOfProductOrService</label>
+			</settings>
+		</column>
+		<column name="quantity">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">quantity</label>
+			</settings>
+		</column>
+		<column name="unit_price">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">unitPrice</label>
+			</settings>
+		</column>
+		<column name="subtotal">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">subTotal</label>
+			</settings>
+		</column>
+		<column name="discount_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">discountAmount</label>
+			</settings>
+		</column>
+		<column name="fee_or_charge_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">feeOrChargeAmount</label>
+			</settings>
+		</column>
+		<column name="line_item_total_excluding_tax">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">lineItemTotalExcludingTax</label>
+			</settings>
+		</column>
+		<column name="item_taxable_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">itemTaxableAmount</label>
+			</settings>
+		</column>
+		<column name="tax_rate">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">taxRate</label>
+			</settings>
+		</column>
+		<column name="tax_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">taxAmount</label>
+			</settings>
+		</column>
+		<column name="line_item_including_tax">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">lineItemIncludingTax</label>
+			</settings>
+		</column>
+		<column name="invoice_additional_discount_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">invoiceAdditionalDiscountAmount</label>
+			</settings>
+		</column>
+		<column name="invoice_additional_fee_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">invoiceAdditionalFeeAmount</label>
+			</settings>
+		</column>
+		<column name="total_discount_value">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">totalDiscountValue</label>
+			</settings>
+		</column>
+		<column name="total_fee_or_charge_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">totalFeeOrChargeAmount</label>
+			</settings>
+		</column>
+		<column name="total_net_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">totalNetAmount</label>
+			</settings>
+		</column>
+		<column name="total_excluding_tax">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">totalExcludingTax</label>
+			</settings>
+		</column>
+		<column name="total_tax_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">totalTaxAmount</label>
+			</settings>
+		</column>
+		<column name="total_including_tax">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">totalIncludingTax</label>
+			</settings>
+		</column>
+		<column name="total_payable_amount">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">totalPayableAmount</label>
+			</settings>
+		</column>
+		<column name="invoice_currency_code">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">invoiceCurrencyCode</label>
+			</settings>
+		</column>
+		<!--<column name="udf1">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">udf1</label>
+			</settings>
+		</column>-->
+	</columns>
+</listing>

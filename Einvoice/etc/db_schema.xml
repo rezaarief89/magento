@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="wow_einvoice_einvoice" resource="default" engine="innodb" comment="wow_einvoice_einvoice Table">
+		<column xsi:type="int" name="einvoice_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="einvoice_id"/>
+		</constraint>
+		<column name="pre_payment_amount" nullable="true" xsi:type="varchar" comment="pre_payment_amount" length="255"/>
+		<column name="document_number" nullable="true" xsi:type="varchar" comment="document_number" length="255"/>
+		<column name="einvoice_type" nullable="true" xsi:type="varchar" comment="einvoice_type" length="255"/>
+		<column name="division_code" nullable="true" xsi:type="varchar" comment="division_code" default="0020"/>
+		<column name="branch_code" nullable="true" xsi:type="varchar" comment="branch_code" default="OCE48" length="255"/>
+		<column name="document_date" nullable="true" xsi:type="date" comment="document_date"/>
+		<column name="document_time" nullable="true" xsi:type="varchar" comment="document_time" length="255"/>
+		<column name="original_einvoice_reference_number" nullable="true" xsi:type="varchar" comment="original_einvoice_reference_number" length="255"/>
+		<column name="original_einvoice_uuid" nullable="true" xsi:type="varchar" comment="original_einvoice_uuid" length="255"/>
+		<column name="description_of_product_or_service" nullable="true" xsi:type="varchar" comment="description_of_product_or_service" length="255"/>
+		<column name="quantity" nullable="true" xsi:type="smallint" comment="quantity" identity="false"/>
+		<column name="unit_price" nullable="true" xsi:type="decimal" comment="unit_price" precision="12" scale="2"/>
+		<column name="subtotal" nullable="true" xsi:type="decimal" comment="subtotal" precision="12" scale="2"/>
+		<column name="discount_amount" nullable="true" xsi:type="decimal" comment="discount_amount" precision="12" scale="2"/>
+		<column name="fee_or_charge_amount" default="0" nullable="true" xsi:type="decimal" comment="discount_amount" precision="12" scale="2"/>
+		<column name="line_item_total_excluding_tax" nullable="true" xsi:type="decimal" comment="line_item_total_excluding_tax" precision="12" scale="2"/>
+		<column name="item_taxable_amount" nullable="true" xsi:type="decimal" comment="item_taxable_amount" precision="12" scale="2"/>
+		<column name="tax_rate" nullable="true" xsi:type="decimal" comment="tax_rate" precision="12" scale="2"/>
+		<column name="tax_amount" nullable="true" xsi:type="decimal" comment="tax_amount" precision="12" scale="2"/>
+		<column name="line_item_including_tax" nullable="true" xsi:type="decimal" comment="line_item_including_tax" precision="12" scale="2"/>
+		<column name="invoice_additional_discount_amount" nullable="true" xsi:type="decimal" comment="invoice_additional_discount_amount" precision="12" scale="2"/>
+		<column name="invoice_additional_fee_amount" nullable="true" xsi:type="varchar" comment="invoice_additional_fee_amount" length="255" default="0.00" />
+		<column name="total_discount_value" nullable="true" xsi:type="decimal" comment="total_discount_value" precision="12" scale="2"/>
+		<column name="total_fee_or_charge_amount" default="0" nullable="true" xsi:type="decimal" comment="discount_amount" precision="12" scale="2"/>
+		<column name="total_net_amount" nullable="true" xsi:type="decimal" comment="total_net_amount" precision="12" scale="2"/>
+		<column name="total_excluding_tax" nullable="true" xsi:type="decimal" comment="total_excluding_tax" precision="12" scale="2"/>
+		<column name="total_tax_amount" nullable="true" xsi:type="decimal" comment="total_tax_amount" scale="2" precision="12"/>
+		<column name="total_including_tax" nullable="true" xsi:type="decimal" comment="total_including_tax" precision="12" scale="2"/>
+		<column name="total_payable_amount" nullable="true" xsi:type="decimal" comment="total_payable_amount" precision="12" scale="2"/>
+		<column name="invoice_currency_code" nullable="true" xsi:type="varchar" comment="invoice_currency_code" default="MYR" length="255"/>
+		<column name="udf1" nullable="true" xsi:type="varchar" comment="udf1" length="255"/>
+		<column name="sku" nullable="true" xsi:type="varchar" comment="sku" length="255"/>
+		<index referenceId="FTI_65B9E9925EC58F0C7C2E2F6379C233E7" indexType="fulltext">
+            <column name="document_number"/>
+        </index>
+	</table>
+
+	<table name="wow_einvoice_token" resource="default" engine="innodb" comment="wow_einvoice_token Table">
+		<column xsi:type="int" name="einvoicetoken_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="einvoicetoken_id"/>
+		</constraint>
+		<column name="expiry" nullable="true" xsi:type="datetime" comment="token expiry"/>
+		<column name="token" nullable="true" xsi:type="varchar" comment="token value" length="255"/>
+		<column name="status" nullable="true" xsi:type="varchar" comment="token status" length="10"/>
+	</table>
+	<table name="wow_einvoice_oauth" resource="default" engine="innodb" comment="wow_einvoice_oauth Table">
+		<column xsi:type="int" name="einvoiceauth_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="einvoiceauth_id"/>
+		</constraint>
+		<column name="access_token" nullable="true" xsi:type="varchar" comment="access token value" length="255"/>
+		<column name="token_type" nullable="true" xsi:type="varchar" comment="token type" length="20"/>
+		<column name="expiry" nullable="true" xsi:type="int" comment="token expiry"/>
+		<column name="created_at" nullable="true" xsi:type="datetime" comment="created at"/>
+		<column name="updated_at" nullable="true" xsi:type="datetime" comment="updated at"/>
+	</table>
+	<table name="wow_einvoice_status" resource="default" engine="innodb" comment="wow_einvoice_status Table">
+		<column xsi:type="int" name="einvoicestatus_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="einvoicestatus_id"/>
+		</constraint>
+		<column name="payload_request" nullable="true" xsi:type="text" comment="payload request"/>
+		<column name="request_type" nullable="true" xsi:type="varchar" comment="request type (invoice or credit memo)"  length="20"/>
+		<column name="request_response" nullable="true" xsi:type="text" comment="request response"/>
+		<column name="request_increment_id" nullable="true" xsi:type="varchar" comment="increment id (invoice or credit memo)"  length="50"/>
+		<column name="tried_times" nullable="true" xsi:type="smallint" comment="tried times" identity="false"/>
+		<column name="status" nullable="true" xsi:type="smallint" comment="response status" identity="false"/>
+		<column name="created_at" nullable="true" xsi:type="datetime" comment="created at"/>
+		<column name="updated_at" nullable="true" xsi:type="datetime" comment="updated at"/>
+	</table>
+</schema>

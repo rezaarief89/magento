@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Wow_Einvoice::einvoice" title="einvoice" sortOrder="10">
+					<resource id="Wow_Einvoice::einvoice_save" title="Save einvoice" sortOrder="10"/>
+					<resource id="Wow_Einvoice::einvoice_delete" title="Delete einvoice" sortOrder="20"/>
+					<resource id="Wow_Einvoice::einvoice_update" title="Update einvoice" sortOrder="30"/>
+					<resource id="Wow_Einvoice::einvoice_view" title="View einvoice" sortOrder="40"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>
