@@ -1,0 +1,105 @@
+<?php
+namespace Wow\QueueMessage\Console\Command;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+use Magento\Framework\App\State;
+use Magento\Framework\Json\Helper\Data;
+use Magento\Framework\MessageQueue\PublisherInterface;
+use Wow\QueueMessage\Model\Queue\TestMsg;
+use Magento\Framework\MessageQueue\ConsumerFactory;
+
+/**
+ * Class RunQueue
+ */
+class RunQueue extends Command
+{
+
+    public $state;
+
+    /**
+     * @var PublisherInterface
+     */
+    private $publisher;
+
+    /**
+     * @var Data
+     */
+    private $jsonHelper;
+
+	/**
+	 * @var Logger
+	 */
+    private $logger;
+
+    /**
+     * @var ConsumerFactory
+     */
+    private $consumerFactory;
+
+    /**
+     * @param PublisherInterface $publisher
+     * @param Data $jsonHelper
+     * @param Logger $logger
+     * @param ConsumerFactory $consumerFactory
+     */
+    public function __construct(
+        State $state,
+        PublisherInterface $publisher,
+        Data $jsonHelper,
+        ConsumerFactory $consumerFactory,
+        $name = null
+    ) {
+        $this->state = $state;
+        $this->publisher = $publisher;
+        $this->jsonHelper = $jsonHelper;
+        $this->consumerFactory = $consumerFactory;
+        parent::__construct($name);
+    }
+
+    protected function configure()
+    {
+        $this->setName('wow:queuemsg:run');
+        $this->setDescription('Run Queue Message Test');
+        parent::configure();
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_FRONTEND);
+
+        $details[] = [
+            "any_informatic_index" => "value",
+        ];
+        $batchSize = 10;
+        $noOfMessages = 10;
+
+        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/reza-test.log');
+        $logger = new \Zend_Log();
+        $logger->addWriter($writer);
+        
+        
+
+        $this->publisher->publish(
+            TestMsg::TOPIC_NAME,
+            $this->jsonHelper->jsonEncode($details)
+        );
+
+        $logger->info('After Publish');
+
+        $consumer = $this->consumerFactory->get('testMsgConsumer', $batchSize);
+
+        $logger->info('After Get');
+
+        $consumer->process($noOfMessages);
+        
+        $logger->info('After Process');
+
+        $logger->info('CLI executed successfully');
+
+        return 1;
+    }
+
+}

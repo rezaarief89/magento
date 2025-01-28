@@ -1,0 +1,21 @@
+<?php
+
+namespace Wow\QueueMessage\Model\Queue;
+
+use Magento\Framework\MessageQueue\ConsumerConfiguration;
+
+class TestMsg extends ConsumerConfiguration
+{
+    /**
+     * Topic name defined for cron
+     */
+    public const TOPIC_NAME = "testMsg";
+
+    public function process($request)
+    {
+        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/reza-test.log');
+        $logger = new \Zend_Log();
+        $logger->addWriter($writer);
+        $logger->info("test");
+    }
+}
